@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { BarChart3, TrendingUp, MapPin, Calendar, AlertCircle } from 'lucide-react';
+import { BarChart3, TrendingUp, MapPin, AlertCircle } from 'lucide-react';
 import { regions } from '@/data/diseases';
 
 interface DiseaseReport {

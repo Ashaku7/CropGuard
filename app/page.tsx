@@ -6,8 +6,6 @@ import {
   Camera,
   Upload,
   Cloud,
-  TrendingUp,
-  Zap,
   ShieldCheck,
   BrainCircuit,
   ArrowRight,
@@ -35,8 +33,7 @@ export default function Home() {
     userLocation,
     setWeather,
     results,
-    role,
-    setRole,
+  role,
     chatMessages,
     addChatMessage,
     isOffline,
@@ -151,7 +148,7 @@ export default function Home() {
         pestRisk: analysis.pestRisk,
         llmAnalysis: analysis.llmAnalysis,
         timestamp: new Date().toISOString(),
-      } as any;
+  };
       setWeather(result.weather);
       setResults(result);
       setProgress(100);
@@ -197,6 +194,7 @@ export default function Home() {
       };
       addChatMessage(assistantMessage);
     } catch (e) {
+      console.error('Chat send failed', e);
       const assistantMessage = {
         id: generateId(),
         role: 'assistant' as const,
@@ -247,7 +245,7 @@ export default function Home() {
               with AI
             </h1>
             <p className="mt-4 text-white/90">
-              Detect pest infestations and plant diseases early with instant AI-powered image analysis. Save your harvest before it's too late.
+              Detect pest infestations and plant diseases early with instant AI-powered image analysis. Protect your harvest with fast, actionable insights.
             </p>
 
             <div className="mt-6 flex items-center gap-3">
@@ -394,7 +392,11 @@ export default function Home() {
                   }
                   try { localStorage.setItem('role', selectedRole); } catch {}
                   // update global role
-                  try { (useStore.getState() as any).setRole(selectedRole); } catch {}
+                  try {
+                    // narrow the getState() shape locally to avoid using `any`
+                    const s = useStore.getState() as unknown as { setRole?: (r: 'farmer' | 'expert') => void };
+                    s.setRole?.(selectedRole);
+                  } catch {}
                   setShowAuth(false);
                   router.push('/community');
                 }}
@@ -557,7 +559,7 @@ export default function Home() {
               <div className="h-96 overflow-y-auto p-4 space-y-3">
                 {chatMessages.length === 0 && (
                   <div className="text-center text-gray-500 py-8">
-                    <p className="mb-2">👋 Hi! I'm here to help!</p>
+                    <p className="mb-2">👋 Hi! I&apos;m here to help!</p>
                     <p className="text-sm">Ask me about treatments, product sourcing, or best practices.</p>
                   </div>
                 )}
