@@ -61,7 +61,7 @@ Analyze example:
 curl -X POST "http://localhost:5000/analyze" -F "image=@sample.jpg" -F "latitude=12.97" -F "longitude=77.59"
 ```
 
-##Steps To Train The Model:
+## Steps To Train The Model:
 
 1. Collect and label crop disease images
 2. Train model using TensorFlow/Keras in Python
